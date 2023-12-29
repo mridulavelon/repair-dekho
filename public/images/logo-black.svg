@@ -1,0 +1,42 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 205 43" width="205" height="43">
+	<title>logo-black-svg</title>
+	<defs>
+		<linearGradient id="g1" x1="41.3" y1="41.6" x2="4.3" y2="17.5" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#ffa239"/>
+			<stop offset=".1" stop-color="#ff983f"/>
+			<stop offset=".3" stop-color="#ff7c4e"/>
+			<stop offset=".6" stop-color="#ff4e68"/>
+			<stop offset=".9" stop-color="#ff108a"/>
+			<stop offset="1" stop-color="#ff0093"/>
+		</linearGradient>
+		<linearGradient id="g2" x1="38.8" y1="-0.9" x2="-7.1" y2="30.2" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#26ffff"/>
+			<stop offset="1" stop-color="#006dff"/>
+		</linearGradient>
+	</defs>
+	<style>
+		tspan { white-space:pre } 
+		.s0 { fill: url(#g1) } 
+		.s1 { fill: url(#g2) } 
+		.t2 { font-size: 22px;fill: #000000;font-weight: 400;font-family: "AlfaSlabOne-Regular", "Alfa Slab One" } 
+		.t3 { font-size: 15px;fill: #938f8f;font-weight: 400;font-family: "Alatsi-Regular", "Alatsi" } 
+	</style>
+	<g id="BACKGROUND">
+	</g>
+	<path id="Layer" class="s0" d="m28.4 39.6h-16.7c-5.6 0-10.2-4.6-10.2-10.3v-3.1c0-5.7 4.6-10.3 10.3-10.3h16.6c5.7 0 10.3 4.6 10.3 10.3v3.1c0 5.7-4.6 10.3-10.3 10.3z"/>
+	<path id="Layer" class="s1" d="m21.1 26.2h-19.6v-15.1c0-4.3 3.5-7.9 7.9-7.9h11.8c6.3 0 11.5 5.1 11.5 11.5-0.1 6.4-5.3 11.5-11.6 11.5z"/>
+	<g id="Layer">
+		<text id="" style="transform: matrix(1,0,0,1,144,19)" >
+		</text>
+		<text id="RepairDekho" style="transform: matrix(1,0,0,1,42,23)" >
+			<tspan x="0" y="0" class="t2">R</tspan><tspan  y="0" class="t2">e</tspan><tspan  y="0" class="t2">p</tspan><tspan  y="0" class="t2">a</tspan><tspan  y="0" class="t2">i</tspan><tspan  y="0" class="t2">r</tspan><tspan  y="0" class="t2">D</tspan><tspan  y="0" class="t2">e</tspan><tspan  y="0" class="t2">k</tspan><tspan  y="0" class="t2">h</tspan><tspan  y="0" class="t2">o</tspan><tspan  y="0" class="t2">
+</tspan>
+		</text>
+		<text id="" style="transform: matrix(1,0,0,1,157,6)" >
+		</text>
+		<text id="Mobile Repair Service" style="transform: matrix(1,0,0,1,44,39)" >
+			<tspan x="0" y="0" class="t3">M</tspan><tspan  y="0" class="t3">o</tspan><tspan  y="0" class="t3">b</tspan><tspan  y="0" class="t3">i</tspan><tspan  y="0" class="t3">l</tspan><tspan  y="0" class="t3">e</tspan><tspan  y="0" class="t3"> </tspan><tspan  y="0" class="t3">R</tspan><tspan  y="0" class="t3">e</tspan><tspan  y="0" class="t3">p</tspan><tspan  y="0" class="t3">a</tspan><tspan  y="0" class="t3">i</tspan><tspan  y="0" class="t3">r</tspan><tspan  y="0" class="t3"> </tspan><tspan  y="0" class="t3">S</tspan><tspan  y="0" class="t3">e</tspan><tspan  y="0" class="t3">r</tspan><tspan  y="0" class="t3">v</tspan><tspan  y="0" class="t3">i</tspan><tspan  y="0" class="t3">c</tspan><tspan  y="0" class="t3">e
+</tspan>
+		</text>
+	</g>
+</svg>

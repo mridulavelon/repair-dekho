@@ -1,0 +1,56 @@
+[
+    {
+        "id":1,
+        "imagelink":"./images/service-device/1.webp",
+        "routelink":"brandselection",
+        "servicelabel":"Screen"
+    },
+    {
+        "id":2,
+        "imagelink":"./images/service-device/2.png",
+        "routelink":"brandselection",
+        "servicelabel":"Battery"
+    },
+    {
+        "id":3,
+        "imagelink":"./images/service-device/3.png",
+        "routelink":"brandselection",
+        "servicelabel":"Camera"
+    },
+    {
+        "id":4,
+        "imagelink":"./images/service-device/4.png",
+        "routelink":"brandselection",
+        "servicelabel":"Mic Repair"
+    },
+    {
+        "id":5,
+        "imagelink":"./images/service-device/5.png",
+        "routelink":"brandselection",
+        "servicelabel":"Receiver"
+    },
+    {
+        "id":6,
+        "imagelink":"./images/service-device/6.png",
+        "routelink":"brandselection",
+        "servicelabel":"Charger"
+    },
+    {
+        "id":7,
+        "imagelink":"./images/service-device/7.png",
+        "routelink":"brandselection",
+        "servicelabel":"Speaker"
+    },
+    {
+        "id":8,
+        "imagelink":"./images/service-device/8.png",
+        "routelink":"brandselection",
+        "servicelabel":"Aux Jack"
+    },
+    {
+        "id":9,
+        "imagelink":"./images/service-device/9.webp",
+        "routelink":"brandselection",
+        "servicelabel":"Sensor"
+    }
+]
