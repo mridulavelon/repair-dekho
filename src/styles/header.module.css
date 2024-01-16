@@ -1,0 +1,128 @@
+.navcontainer{
+  padding:0;
+  margin:0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+  font-family: 'Open Sans',  sans-serif;
+}
+.navbarcontainer{
+    background: #fff;
+    height: 80px;
+    width: 100%;
+    position: fixed;
+    z-index: 999;
+}
+.navbarlabel{
+    color:black;
+    font-size:35px;
+    padding: 10px 100px;
+    font-weight: bold;
+}
+.navbarcontainer ul{
+    float:right;
+    margin-right:20px;  
+}
+.navbarcontainer ul li{
+    display: inline-block;
+    line-height: 80px;
+    margin:0 5px;
+}
+.navbarcontainer ul li a {
+    color: black;
+    font-size: 17px;
+    padding: 7px 13px;
+    border-radius: 3px;
+}
+.phonemenuitem{
+    font-size: 18px; 
+    width: 50px;
+    height: 50px; 
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px !important;
+    color: #fff !important; 
+    background: var(--blue-color); 
+    box-shadow: 0 20px 20px rgb(36 0 255/10%);
+}
+.loginmenuitem{
+    border-radius: 100px !important;
+    overflow: hidden;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: .4px;
+    padding: 0 32px !important;
+    height: auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    line-height: 64px;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    grid-gap: 8px;
+    border: 0;
+    transform: translateY(0);
+    color: #fff !important; 
+    background: var(--orange-color);
+    box-shadow: 0 19px 40px -10px rgb(255 79 0/25%);
+}
+
+.checkbtn{
+    font-size: 30px;
+    color: white;
+    float: right;
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+}
+.check{
+    display: none;
+}
+@media (max-width:952px){
+  .navbarlabel{
+     font-size: 30px;
+     padding: 20px;
+  }
+  .navbarcontainer ul li a {
+    font-size: 16px;
+  }  
+  .phonemenuitem{
+    margin: 0 300px;
+    width: auto;
+  } 
+}
+@media (max-width : 858px){
+    .checkbtn{
+         display: block;
+    }
+    .navbarcontainer ul{
+       position: fixed;
+       width: 100%;
+       height: 100vh;
+       background:#fff;
+       top:80px;
+       left:-100%;
+       text-align: center;
+       transition: all .5s;
+       z-index: 999;
+    }
+    .navbarcontainer ul li{
+        display: block;
+        margin: 32px 0;
+        line-height: 30px;
+    }
+    .navbarcontainer ul li a {
+       font-size: 20px;
+    }    
+    .check:checked ~ ul{
+        left: 0;
+    }
+    .phonemenuitem{
+        margin: 0 134px;
+        width: auto;
+    } 
+}

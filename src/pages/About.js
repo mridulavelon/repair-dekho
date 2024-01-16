@@ -25,7 +25,7 @@ export default function About() {
       <link href="css/colormode.css" rel="stylesheet"/>
        </Head>
         <Header/>
-      <section class="aboutblock section-space mt100">
+      <section class="aboutblock section-space">
       <div class="container">
          <div class="row v-center">
             <div class="col-lg-7">
