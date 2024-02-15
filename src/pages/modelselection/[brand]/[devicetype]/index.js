@@ -1,9 +1,11 @@
 import { useEffect,useState } from "react"
-import Head from 'next/head';
-import Header from '@/components/Header';
+import Head from 'next/head'
+import Header from '@/components/Header'
 import Footer from '@/components/Footer';
-import Link from 'next/link';
-import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
+import { addmodelobj } from "slices/counterSlice";
+import RiseLoader from "react-spinners/RiseLoader";
+import { useRouter } from "next/router";
 import axios from "axios";
 import {
    Accordion,
@@ -12,40 +14,63 @@ import {
    AccordionItemButton,
    AccordionItemPanel,
  } from 'react-accessible-accordion';
- import 'react-accessible-accordion/dist/fancy-example.css';
- import { ToastContainer, toast } from 'react-toastify';
- import 'react-toastify/dist/ReactToastify.css';
+import 'react-accessible-accordion/dist/fancy-example.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function Brandselection({ data }) {
-   const [brands,setBrands] = useState([]);
-
+export default function Modelselection({ data }) {
+   const router = useRouter();
+   const dispatch = useDispatch();
+   const [models,setModels] = useState([]);
    const faqs = [
       {
          id:1,
-         heading:"How Does Repair Dekho Works?",
+         heading:"How can i contact Repair Dekho?",
          para:"Test"
       },
       {
          id:2,
-         heading:"How long will the onsite repair take?",
+         heading:"Is there any warrant from Repair Dekho for the repairs?",
          para:"Test"
       },
       {
          id:3,
-         heading:"After the screen/spare parts are replaced,if i don't like the screen will you return my money?",
+         heading:"How can i claim my warranty?",
+         para:"Test"
+      },
+      {
+         id:3,
+         heading:"What does a 6-month warranty cover?",
          para:"Test"
       }
    ]
-   
+
+   const getModels = async (brand,devicetype) => {
+    let data = {
+         brand:brand,
+         type:devicetype
+      } 
+   const modelsCall = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/models/getmodels`,data)
+     .then((response) => {
+       if(response.status === 201){
+         setModels(response.data.models);
+       }else{
+         setModels([]);
+       }
+     }).catch((error) => {
+        toast.error(error.message ? error.message : "Something unexpected happened please try again later",{
+         theme:"colored"
+      })
+     })
+   }
+
    useEffect(() => {
-      if(data.success){
-         setBrands(data.response)
-      }else{
-        toast.error(data.response,{
-          theme:"colored"
-        })
-      }
-    },[])
+      getModels(router.query.brand,router.query.devicetype)
+    }, [])    
+
+    const modelselected = (model) => {
+      router.push(`/product/${model._id}`)
+    }
 
   return (
    <>
@@ -64,7 +89,7 @@ export default function Brandselection({ data }) {
       <link href="/css/responsive.css" rel="stylesheet" />
       <link href="/css/colormode.css" rel="stylesheet" />
    </Head>
-    <Header location={"Brandselection"}/>
+    <Header location={"Modelselection"}/>
     <section class="section-space  padding-b50">
          <div class="container">
             <div class="row justify-content-between">
@@ -74,8 +99,7 @@ export default function Brandselection({ data }) {
                      <div class="service-header">MOBILE REPAIR SERVICES</div>
                      <p class="line-height">We Are Dedicated To Provide You Best Mobile Phone Repairing Services At Your Door Step.
                      </p>
-                  </div>                 
-                                  
+                  </div>                              
                </div>
                <div class="col-xl-6 col-lg-6 mmt40">
                   <div class="roundimg"><img src="/images/service-bg.png" alt="img"/></div>
@@ -83,28 +107,33 @@ export default function Brandselection({ data }) {
             </div>
          </div>
       </section>
-      <section class="section-space" style={{paddingTop:'50px'}}>
-        
-               <div class="container select-phone ">
-
+      <section class="section-space" style={{paddingTop:'50px'}}> 
+               <div class="container select-phone">
                <div class="row justify-content-center text-center">
                <div class="col-xl-12 col-lg-12">
                   <div class="service-body-head-sub2">
-                     Select your mobile brand
+                    {models.length > 0 ? "Select your model" : "No models found"}
                   </div>
                </div>
             </div>
                   <div class="phone-issue brand-box">
-                     {brands.map((brand) => (
-                     <div class="issue-box" key={brand.value}>
-                        <Link href={`/modelselection/${brand.value}/mobile`}>
-                        <img src={brand.imagelink}/>
-                     </Link>
+                     {models.map((model) => (
+                     <div class="issue-box" key={model._id}>
+                         <a href="#">
+                        <img src={model.smallimagelink}/>
+                        </a>
+                        <div>
+                           {model.modelname}
+                        </div>
+                        <button className="modelnextbutton" onClick={() => modelselected(model)}>                       
+                           Next 
+                        </button>
                      </div>))}
                   </div>
+                 
+                  </div>
                   <div class="clearfix"></div>
-               </div>
-             <div className="accordion-container">
+                  <div className="accordion-container">
                <Accordion>
                   {faqs.map((faq) => (
                           <AccordionItem>
@@ -122,20 +151,9 @@ export default function Brandselection({ data }) {
                   ))}
         </Accordion>  
         </div>
-      </section>
+            </section>
     <Footer/>
     <ToastContainer />
-    </>
+   </>
   )
 }
-export async function getStaticProps() {
-   const brandsCall = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/brands/getbrands`)
-   .then((response) => {
-     if(response.status === 200){
-       return {success:true,response:response.data.response}
-     }
-   }).catch((error) => {
-      return {success:false,response:error.message ? error.message : "Something unexpected happend please try again later"}
-   })
-   return { props: { data:brandsCall } };
- }

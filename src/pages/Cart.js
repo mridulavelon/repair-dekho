@@ -8,16 +8,15 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch,useSelector } from 'react-redux';
 import { useRouter } from "next/router";
 import { setCart } from "slices/counterSlice";
-import ProtectedRoute from '@/components/ProtectedRoute';
 import Link from "next/link";
 
 
-const Cart = () =>  {
+export default function Cart () {
    const router = useRouter();
    const dispatch = useDispatch();
    const reduxstate = useSelector((state) => state.counter);
    const [cartorders,setCartOrders] = useState([]);
-   const [loading,setLoading] = useState(true);
+   const [loading,setLoading] = useState(false);
    const [totalprice,setTotalPrice] = useState(0);
 
 
@@ -35,7 +34,6 @@ const Cart = () =>  {
 
    const deleteCartOrder = (orderid) => {
        let elementindex = cartorders.findIndex(cartorder => cartorder.orderid === orderid );
-       console.log(elementindex);
        if(elementindex > -1){
           let orders = [...cartorders];
           orders.splice(elementindex,1);
@@ -61,7 +59,7 @@ const Cart = () =>  {
       <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
       <meta name="theme-color" content="#111"/>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-      <link href="./css/style.css" rel="stylesheet"/>
+      <link href="/css/style.css" rel="stylesheet"/>
    </Head>
         <RiseLoader color='#ff5723'/>
       </div>
@@ -73,14 +71,14 @@ const Cart = () =>  {
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
       <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
       <meta name="theme-color" content="#111"/>
-      <link href="./images/favicon.png" rel="icon"/>
-      <link href="./css/bootstrap.min.css" rel="stylesheet"/>
-      <link href="./css/blueket.plugin.css" rel="stylesheet"/>
-      <link href="./css/swiper.min.css" rel="stylesheet"/>
+      <link href="/images/favicon.png" rel="icon"/>
+      <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+      <link href="/css/blueket.plugin.css" rel="stylesheet"/>
+      <link href="/css/swiper.min.css" rel="stylesheet"/>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-      <link href="./css/style.css" rel="stylesheet"/>
-      <link href="./css/responsive.css" rel="stylesheet" />
-      <link href="./css/colormode.css" rel="stylesheet" />
+      <link href="/css/style.css" rel="stylesheet"/>
+      <link href="/css/responsive.css" rel="stylesheet" />
+      <link href="/css/colormode.css" rel="stylesheet" />
    </Head>
     <Header location={"Cart"}/>
     <section class="h-100" style={{backgroundColor: '#eee'}}>
@@ -98,16 +96,18 @@ const Cart = () =>  {
           <div class="card-body p-4">
             <div class="row d-flex justify-content-between align-items-center">
               <div class="col-md-2 col-lg-2 col-xl-2">
+              <Link href={`/product/${cartorder.modelid}`}>
                 <img
                   src={cartorder.modelimagelink}
                   class="img-fluid rounded-3" alt={`${cartorder.brand} ${cartorder.model}`}/>
+              </Link>
               </div>
               <div class="col-md-3 col-lg-3 col-xl-3">
                 <p class="lead fw-normal mb-2">{cartorder.modelname}</p>
               </div>
               <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                 <div>
-                {cartorder.display && <span>Display: ₹ {cartorder.display}<br /></span>}
+                {cartorder.display && <span>Display({cartorder.display.type}): ₹ {cartorder.display.price}<br /></span>}
                 {cartorder.battery && <span>Battery: ₹ {cartorder.battery}<br /></span>}
                 {cartorder.charging && <span>Charging: ₹ {cartorder.charging}<br /></span>}
                 {cartorder.backpanel && <span>Backpanel: ₹ {cartorder.backpanel}<br /></span>}
@@ -146,7 +146,7 @@ const Cart = () =>  {
         <div class="d-flex justify-content-center align-items-center h-100 mt-5">
             <div className="no-cart-container">
             <span>Your cart is empty kindly select your device</span>
-            <Link href="Repairmydevice">
+            <Link href="/Repairmydevice">
                <button className="select-your-device">Select your device</button>
              </Link>
             </div>
@@ -159,4 +159,3 @@ const Cart = () =>  {
    </>
   )
 }
-export default ProtectedRoute(Cart);

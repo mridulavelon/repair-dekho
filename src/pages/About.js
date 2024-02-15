@@ -15,14 +15,14 @@ export default function About() {
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
       <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
       <meta name="theme-color" content="#111"/>
-      <link href="./images/favicon.png" rel="icon"/>
-      <link href="./css/bootstrap.min.css" rel="stylesheet"/>
-      <link href="./css/blueket.plugin.css" rel="stylesheet"/>
-      <link href="./css/swiper.min.css" rel="stylesheet"/>
+      <link href="/images/favicon.png" rel="icon"/>
+      <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+      <link href="/css/blueket.plugin.css" rel="stylesheet"/>
+      <link href="/css/swiper.min.css" rel="stylesheet"/>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-      <link href="css/style.css" rel="stylesheet"/>
-      <link href="css/responsive.css" rel="stylesheet"/>
-      <link href="css/colormode.css" rel="stylesheet"/>
+      <link href="/css/style.css" rel="stylesheet"/>
+      <link href="/css/responsive.css" rel="stylesheet"/>
+      <link href="/css/colormode.css" rel="stylesheet"/>
        </Head>
         <Header/>
       <section class="aboutblock section-space">
@@ -62,7 +62,7 @@ export default function About() {
                <div class="img-collage-set row">
                 
                   <div class=" index-up">
-                     <div class="imgcover roundimg shadow"> <img src="./images/repair-13.png" alt="img"/></div>
+                     <div class="imgcover roundimg shadow"> <img src="/images/repair-13.png" alt="img"/></div>
                   </div>
                  
                   <div class="blueketshape2 shapesw shapecontrol-3"></div>
@@ -96,7 +96,7 @@ export default function About() {
                <div class="img-collage-set row">
                   <div class="blueketshape1 shapesw shapecontrol-4"></div>
                   <div class=" index-up">
-                     <div class="imgcover roundimg shadow"> <img src="./images/repair-13.png" alt="img"/></div>
+                     <div class="imgcover roundimg shadow"> <img src="/images/repair-13.png" alt="img"/></div>
                   </div>
                  
                   <div class="blueketshape2 shapesw shapecontrol-3"></div>
@@ -113,7 +113,7 @@ export default function About() {
                <div class="img-collage-set row">
                 
                   <div class=" index-up">
-                     <div class="imgcover roundimg shadow"> <img src="./images/repair-13.png" alt="img"/></div>
+                     <div class="imgcover roundimg shadow"> <img src="/images/repair-13.png" alt="img"/></div>
                   </div>
                  
                   <div class="blueketshape2 shapesw shapecontrol-3"></div>

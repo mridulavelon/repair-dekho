@@ -1,24 +1,21 @@
 import { useState,useEffect } from 'react';
-import Link from 'next/link';
-import Head from 'next/head';
-import RiseLoader from "react-spinners/RiseLoader";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAddressCard, faCartShopping, faLocationDot, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
-import states from '../Utils/states.json';
 import { useRouter } from 'next/router';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch,useSelector } from 'react-redux';
-import { addShippingdetails,addbillingdetails, adduserobj } from 'slices/counterSlice';
-import ProtectedRoute from '@/components/ProtectedRoute';
+import { jwtDecode } from "jwt-decode";
+import Head from 'next/head';
 import moment from 'moment/moment';
+import axios from 'axios';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import 'react-toastify/dist/ReactToastify.css';
+import states from '../Utils/states.json';
 
-const Userpanel = () => {
-    const dispatch = useDispatch();
-    const reduxstate = useSelector((state) => state.counter);
-    const router = useRouter(); 
-    const [loading,setLoading] = useState(true);
+export default function Userpanel () {
+    const router = useRouter();
+    const reduxstate = useSelector((state) => state.counter); 
     const [tab,setTab] = useState('orders');
     const [billingedit,setBillingEdit] = useState(false);
     const [shippingedit,setShippingEdit] = useState(false);
@@ -44,11 +41,14 @@ const Userpanel = () => {
     const [mobileno,setMobileNo] = useState('');
 
     const getAllData = async () => {
-        let cookies = document.cookie.split(';')
-        let idarray = cookies[1].split('=');
-        const data = {
-            userid:idarray[1]
-        }
+        const cookiesArray = document.cookie.split(';');
+        const tokenCookieItem = cookiesArray.find((cookie) => cookie.includes('token'));
+        if(tokenCookieItem){
+           const tokenCookie = tokenCookieItem.split('=');  
+           const decodedToken = jwtDecode(tokenCookie[1]);   
+           const data = {
+             userid:decodedToken.id
+           }
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/orders/getuserorders`,data);
         if(response.data){
             setOrders(response.data.orders);
@@ -61,58 +61,74 @@ const Userpanel = () => {
             setEmail(response2.data.email && response2.data.email);
             setMobileNo(response2.data.mobileno && response2.data.mobileno);
         }
-        if(response2.data.billingaddress){
-           let addressarray = response2.data.billingaddress.split(';');
-           let housenumberarray = addressarray[0].split('=');
-           let apartmentnoaaray = addressarray[1].split('=');
-           let townarray = addressarray[2].split('=');
-           let statearray = addressarray[3].split('=');
-           let pincodearray = addressarray[4].split('=');
-          let address = {
-              housenumber:housenumberarray[1],
-              apartmentno:apartmentnoaaray[1],
-              town:townarray[1],
-              state:statearray[1],
-              pincode:pincodearray[1]
-          }
-          dispatch(addbillingdetails(address));
+        if(response2.data.hasOwnProperty('billingaddress')){
+            let address;
+            if(response2.data.billingaddress.length > 0){
+                let addressarray = response2.data.billingaddress.split(';');
+                let housenumberarray = addressarray[0].split('=');
+                let apartmentnoaaray = addressarray[1].split('=');
+                let townarray = addressarray[2].split('=');
+                let statearray = addressarray[3].split('=');
+                let pincodearray = addressarray[4].split('=');
+                address = {
+                   housenumber:housenumberarray[1],
+                   apartmentno:apartmentnoaaray[1],
+                   town:townarray[1],
+                   state:statearray[1],
+                   pincode:pincodearray[1]
+               }
+            }
+            else{
+                address = {
+                    housenumber:'',
+                    apartmentno:'',
+                    town:'',
+                    state:'',
+                    pincode:''
+                }
+            }
+        setBillingAddress(address)
         }
-        if(response2.data.shippingaddress){
-            let addressarray = response2.data.shippingaddress.split(';');
-            let housenumberarray = addressarray[0].split('=');
-            let apartmentnoaaray = addressarray[1].split('=');
-            let townarray = addressarray[2].split('=');
-            let statearray = addressarray[3].split('=');
-            let pincodearray = addressarray[4].split('=');
-           let address = {
-               housenumber:housenumberarray[1],
-               apartmentno:apartmentnoaaray[1],
-               town:townarray[1],
-               state:statearray[1],
-               pincode:pincodearray[1]
-           }
-           dispatch(addShippingdetails(address));
+        if(response2.data.hasOwnProperty('shippingaddress')){
+            let address;
+            if(response2.data.shippingaddress.length > 0){
+                let addressarray = response2.data.shippingaddress.split(';');
+                let housenumberarray = addressarray[0].split('=');
+                let apartmentnoaaray = addressarray[1].split('=');
+                let townarray = addressarray[2].split('=');
+                let statearray = addressarray[3].split('=');
+                let pincodearray = addressarray[4].split('=');
+                address = {
+                    housenumber:housenumberarray[1],
+                    apartmentno:apartmentnoaaray[1],
+                    town:townarray[1],
+                    state:statearray[1],
+                    pincode:pincodearray[1]
+                }
+            }else{
+                address = {
+                    housenumber:'',
+                    apartmentno:'',
+                    town:'',
+                    state:'',
+                    pincode:''
+                }  
+            }
+             setShippingAddress(address)
          }
+        }
     }
 
 
     useEffect(() => {
-     setTimeout(() => {
-         setLoading(false);
-     },1000);
-     if(document.cookie){
-        getAllData();
-     }
+      getAllData();
     },[]);
 
     const Logout = () => {
         var Cookies = document.cookie.split(';');
         for (var i = 0; i < Cookies.length; i++) {
-           document.cookie = Cookies[i] + "=; expires="+ new Date(0).toUTCString();
+           document.cookie = Cookies[i] + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
         }
-        dispatch(adduserobj({}));
-        dispatch(addShippingdetails({}));
-        dispatch(addbillingdetails({}));
         router.push('/');
     }
 
@@ -137,7 +153,6 @@ const Userpanel = () => {
               })      
            }
        }).catch((error) => {
-        console.log(error)
         toast.error(error.response?.data?.message ? error.response?.data?.message : "Something unexpected happened",{
             theme:"colored"
           })     
@@ -181,46 +196,60 @@ const Userpanel = () => {
        getAllData()
     }
 
+
+    const deleteAddress = async(addresstype) => {
+        let cookies = document.cookie.split(';')
+        let idarray = cookies[1].split('=');
+        let data = {
+          userid:idarray[1],
+        }
+        data[`${addresstype}`] = '';
+        const addressUpdateCall = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/accountdetails/update`,data)
+        .then((response)=> {
+            if(response.data){
+                getAllData();
+                toast.success("Address updated successfully",{
+                    theme:"colored"
+                  })
+               }
+        })
+        .catch((error) => {
+            toast.error(error.message ? error.message : "Something unexpected happened",{
+                theme:"colored"
+              })  
+        })
+    }
+
   return (
-    <>
-    {loading ? (
-       <div className='loader'>
-       <Head>
-     <meta charset="UTF-8" />
-     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <title>Repair Dekho</title>
-     <link href="./images/favicon.png" rel="icon"/>
-     <link rel="stylesheet" href="./css/style.css" />
-    </Head>
-       <RiseLoader color='#ff5723'/>
-       </div>
-    ):(
     <>
      <Head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
-    <title>Document</title>
+    <title>Userpanel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="theme-color" content="#111"/>
+    <link href="/images/favicon.png" rel="icon"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"/>
-    <link rel="stylesheet" href="./css/userpanel.css"/>
-    </Head>    
+    <link rel="stylesheet" href="/css/userpanel.css"/>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+    <link href="/css/responsive.css" rel="stylesheet"/>
+    </Head>  
+    <Header location={"userpanel"}/>
+    <div class="userpanel-container">
+    <div>  
     <input type="checkbox" id="sidebar-toggle"/>
     <div class="sidebar">
         <div class="sidebar-header">
-            <h3 class="brand">
+            <h3>
                 <span>Dashboard</span>
-            </h3> 
-            <label for="sidebar-toggle" class="ti-menu-alt"></label>
+            </h3>             <label for="sidebar-toggle" class="ti-menu-alt"></label>
         </div>
         
         <div class="sidebar-menu">
             <ul>
-                <li>
-                      <Link href="/">
-                        <span class="ti-home"></span>
-                        <span>Home</span>
-                    </Link>
-                </li>
                 <li onClick={() => setTab('orders')} style={{fontSize:`${tab==='orders' ? '20px' :''}`}}>
                     <a href='#'>
                     <FontAwesomeIcon icon={faCartShopping}/>
@@ -248,9 +277,9 @@ const Userpanel = () => {
             </ul>
         </div>
     </div>
-    <div class="main-content">
-        
-        <header>
+    </div>
+    <div class="main-content">    
+        {/* <header>
             <div class="search-wrapper">
                 <span class="ti-search"></span>
                 <input type="search" placeholder="Search" />
@@ -261,7 +290,7 @@ const Userpanel = () => {
                 <span class="ti-comment"></span>
                 <div></div>
             </div>
-        </header>
+        </header> */}
         
         <main>
             
@@ -322,15 +351,18 @@ const Userpanel = () => {
                         <span><FontAwesomeIcon icon={faLocationDot}/></span>
                         <div>
                            <h5>Shipping address</h5>
-                           <h4>{reduxstate.shippingdetails.housenumber}</h4>
-                           <h4>{reduxstate.shippingdetails.apartmentno}</h4>
-                           <h4>{reduxstate.shippingdetails.town}</h4>
-                           <h4>{reduxstate.shippingdetails.state}</h4>
-                           <h4>{reduxstate.shippingdetails.pincode}</h4>
+                           <h4>{shippingAddress.housenumber}</h4>
+                           <h4>{shippingAddress.apartmentno}</h4>
+                           <h4>{shippingAddress.town}</h4>
+                           <h4>{shippingAddress.state}</h4>
+                           <h4>{shippingAddress.pincode}</h4>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <span onClick={() => setShippingEdit(true)}  style={{cursor:'pointer'}}>{Object.keys(reduxstate.shippingdetails).length === 0 ? 'Add':'Edit'}</span>
+                        <div class="addressaction-container">
+                        <span onClick={() => setShippingEdit(true)}>{shippingAddress.housenumber.length > 0 ? 'Edit':'Add'}</span>
+                        {shippingAddress.housenumber.length > 0 && <span onClick={() => deleteAddress('shippingaddress')}>Delete</span>}
+                        </div>
                     </div>
                 </div>
                 )}
@@ -387,15 +419,18 @@ const Userpanel = () => {
                     <span><FontAwesomeIcon icon={faAddressCard}/></span>
                         <div>
                            <h5>Billing address</h5>
-                           <h4>{reduxstate.billingdetails.housenumber}</h4>
-                           <h4>{reduxstate.billingdetails.apartmentno}</h4>
-                           <h4>{reduxstate.billingdetails.town}</h4>
-                           <h4>{reduxstate.billingdetails.state}</h4>
-                           <h4>{reduxstate.billingdetails.pincode}</h4>
+                           <h4>{billingaddress.housenumber}</h4>
+                           <h4>{billingaddress.apartmentno}</h4>
+                           <h4>{billingaddress.town}</h4>
+                           <h4>{billingaddress.state}</h4>
+                           <h4>{billingaddress.pincode}</h4>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <span onClick={() => setBillingEdit(true)} style={{cursor:'pointer'}}>{Object.keys(reduxstate.shippingdetails).length === 0 ? 'Add':'Edit'}</span>
+                    <div class="addressaction-container">
+                        <span onClick={() => setBillingEdit(true)} style={{cursor:'pointer'}}>{billingaddress.housenumber.length > 0 ? 'Edit':'Add'}</span>
+                        {billingaddress.housenumber.length > 0 && <span onClick={() => deleteAddress('billingaddress')}  style={{cursor:'pointer'}}>Delete</span>}
+                    </div>
                     </div>
                 </div>
                 )}
@@ -428,7 +463,7 @@ const Userpanel = () => {
                                     <tr>
                                         <td><div><img className='order-image' src={order.modelimagelink}/></div>{order.model}</td>
                                         <td>
-                                          {order.display && <span>Display : ₹ {order?.display}<br/></span>}
+                                          {order.display && <span>Display({order.display.type}): ₹ {order.display.price}<br /></span>}
                                           {order.battery && <span>Battery : ₹ {order?.battery}<br/></span>}
                                           {order.charging && <span>Charging : ₹ {order?.charging}<br/></span>}
                                           {order.backpanel && <span>Back Panel : {order?.backpanel}<br/></span>}
@@ -507,10 +542,9 @@ const Userpanel = () => {
         </main>
         
     </div>
+    </div>
+    <Footer />
     <ToastContainer />
-    </>
-    )}
     </>
   )
 }
-export default ProtectedRoute(Userpanel);

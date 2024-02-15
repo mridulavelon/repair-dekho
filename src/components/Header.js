@@ -57,10 +57,11 @@ export default function Header({ location }) {
          <li><Link href='/About' >About Us</Link></li>
          <li><Link href="/Repairmydevice" >Repair My Device</Link></li>
          <li><Link href="/offers" >Offers</Link></li>
+         <li><Link href="/blogs" >Blogs</Link></li>
          <li><Link href="/Contactus">Contact Us</Link></li>
          <li data-tooltip-id="phone-mark" onClick={() => handlePhonePad()}><a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className={styles.phonemenuitem}><FontAwesomeIcon className="icon" icon={faPhone}/></a></li>
-         <li><Link href={validUser ? "Userpanel" : "Login"} className={styles.loginmenuitem}>{userDetails.username ? `${userDetails.username}` : 'Login'}<FontAwesomeIcon className="icon" icon={faUser}/></Link></li>
-         <li><Link href='Cart'><FontAwesomeIcon icon={faCartArrowDown} size="lg"/></Link></li>
+         <li><Link href={validUser ? "/Userpanel" : "/Login"} className={styles.loginmenuitem}>{userDetails.username ? `${userDetails.username}` : 'Login'}<FontAwesomeIcon className="icon" icon={faUser}/></Link></li>
+         <li><Link href='/Cart'><FontAwesomeIcon icon={faCartArrowDown} size="lg"/></Link></li>
       </ul>
     </nav>
   </header>

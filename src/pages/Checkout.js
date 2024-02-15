@@ -1,4 +1,5 @@
 import { useEffect,useState } from "react"
+import { useRouter } from "next/router";
 import Head from 'next/head'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer';
@@ -7,27 +8,34 @@ import { useDispatch,useSelector } from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import states from '../Utils/states.json';
 import { setCart } from "slices/counterSlice";
-import ProtectedRoute from '@/components/ProtectedRoute';
 
-const Checkout = () =>  {
+export default function Checkout () {
+   const router = useRouter();
    const dispatch = useDispatch();
    const reduxstate = useSelector((state) => state.counter);
    const [orderplacing,setOrderPlacing] = useState(false);
    const [agreed,setAgreed] = useState(false);
    const [loading,setLoading] = useState(true);
    const [orderplaced,setOrderPlaced] = useState(false);
+   const [userDetails,setUserDetails] = useState({});
    const [shippingAddress,setShippingAddress] = useState({});
    const [shippingAddressEdit,setShippingAddressEdit] = useState(true);
    const [addressExist,setAddressExist] = useState(false);
    const [preferredDateTime,setPreferredDateTime] = useState("");
+   const [userid,setUserId] = useState("");
 
    useEffect(() => {
-      setTimeout(() => {
-          setLoading(false);
-      },1000);
-      getAllData();
+      if(reduxstate.cart.length > 0){
+        setTimeout(() => {
+            setLoading(false);
+        },1000);
+        getAllData();
+      }else{
+        router.push('/');
+      }
     },[])
 
 
@@ -36,7 +44,7 @@ const Checkout = () =>  {
             toast.error("Please accept the terms and conditions",{
                 theme:"colored"
               })
-        }else if(reduxstate.shippingdetails.housenumber == undefined){
+        }else if(shippingAddress.housenumber == undefined){
             toast.error("Please update the shipping address",{
                 theme:"colored"
               })
@@ -50,7 +58,8 @@ const Checkout = () =>  {
                 await Promise.all(reduxstate.cart.map(async(order) => {
                     let data = {
                       ...order,
-                      userdetails:reduxstate.userobj,
+                      userid:userid,
+                      userdetails:userDetails,
                       shippingaddress:shippingAddress,
                       orderdate:new Date(),
                       servicedatetimepreffered:preferredDateTime,
@@ -73,34 +82,46 @@ const Checkout = () =>  {
     }
 
     const getAllData = async () => {
-        let cookies = document.cookie.split(';')
-        let idarray = cookies[1].split('=');
-        const data = {
-            userid:idarray[1]
+        const cookiesArray = document.cookie.split(';');
+        const tokenCookieItem = cookiesArray.find((cookie) => cookie.includes('token'));
+        if(tokenCookieItem){
+            const tokenCookie = tokenCookieItem.split('=');  
+            const decodedToken = jwtDecode(tokenCookie[1]);  
+            setUserId(decodedToken.id);
+            const data = {
+              userid:decodedToken.id
+            }
+            const response2 = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/accountdetails/getdetails`,data);  
+            if(response2.data.shippingaddress){
+                let addressarray = response2.data.shippingaddress.split(';');
+                let housenumberarray = addressarray[0].split('=');
+                let apartmentnoaaray = addressarray[1].split('=');
+                let townarray = addressarray[2].split('=');
+                let statearray = addressarray[3].split('=');
+                let pincodearray = addressarray[4].split('=');
+                let address = {
+                   housenumber:housenumberarray[1],
+                   apartmentno:apartmentnoaaray[1],
+                   town:townarray[1],
+                   state:statearray[1],
+                   pincode:pincodearray[1]
+               }
+               setShippingAddress(address);
+               setAddressExist(true);
+               setShippingAddressEdit(false);
+            }
+            const userObj = {
+                firstname:response2.data.firstname,
+                lastname:response2.data.lastname,
+                username:response2.data.username,
+                email:response2.data.email,
+                mobileno:response2.data.mobileno
+            }
+            setUserDetails(userObj);
         }
-        const response2 = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/accountdetails/getdetails`,data);       
-        if(response2.data.shippingaddress){
-            let addressarray = response2.data.shippingaddress.split(';');
-            let housenumberarray = addressarray[0].split('=');
-            let apartmentnoaaray = addressarray[1].split('=');
-            let townarray = addressarray[2].split('=');
-            let statearray = addressarray[3].split('=');
-            let pincodearray = addressarray[4].split('=');
-            let address = {
-               housenumber:housenumberarray[1],
-               apartmentno:apartmentnoaaray[1],
-               town:townarray[1],
-               state:statearray[1],
-               pincode:pincodearray[1]
-           }
-           setShippingAddress(address);
-           setAddressExist(true);
-           setShippingAddressEdit(false);
-         }
     }
     const shippingAddressSubmitHandler = async (e) => {
       e.preventDefault();
-      console.log(shippingAddress);
       let cookies = document.cookie.split(';')
       let idarray = cookies[1].split('=');
       let data = {
@@ -128,7 +149,7 @@ const Checkout = () =>  {
       <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
       <meta name="theme-color" content="#111"/>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-      <link href="./css/style.css" rel="stylesheet"/>
+      <link href="/css/style.css" rel="stylesheet"/>
    </Head>
         <RiseLoader color='#ff5723'/>
       </div>
@@ -140,15 +161,15 @@ const Checkout = () =>  {
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
       <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
       <meta name="theme-color" content="#111"/>
-      <link href="./images/favicon.png" rel="icon"/>
-      <link href="./css/bootstrap.min.css" rel="stylesheet"/>
-      <link href="./css/blueket.plugin.css" rel="stylesheet"/>
-      <link href="./css/swiper.min.css" rel="stylesheet"/>
+      <link href="/images/favicon.png" rel="icon"/>
+      <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+      <link href="/css/blueket.plugin.css" rel="stylesheet"/>
+      <link href="/css/swiper.min.css" rel="stylesheet"/>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-      <link href="./css/style.css" rel="stylesheet"/>
-      <link rel="stylesheet" href="./css/userpanel.css"/>
-      <link href="./css/responsive.css" rel="stylesheet" />
-      <link href="./css/colormode.css" rel="stylesheet" />
+      <link href="/css/style.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="/css/userpanel.css"/>
+      <link href="/css/responsive.css" rel="stylesheet" />
+      <link href="/css/colormode.css" rel="stylesheet" />
    </Head>
     <Header location={"Cart"}/>
     {orderplaced ? (
@@ -263,7 +284,8 @@ const Checkout = () =>  {
                                 <tbody>
                                     <tr>
                                         <td><div><img className='order-image' src={order.modelimagelink}/></div>{order.model}</td>
-                                        <td>{order.display && <span>Display : ₹ {order.display}<br/></span>}
+                                        <td>
+                                          {order.display && <span>Display({order.display.type}): ₹ {order.display.price}<br /></span>}
                                           {order.battery && <span>Battery : ₹ {order.battery}<br/></span>}
                                           {order.charging && <span>Charging : ₹ {order.charging}<br/></span>}
                                           {order.backpanel && <span>Back Panel : ₹ {order.backpanel}<br/></span>}
@@ -271,7 +293,8 @@ const Checkout = () =>  {
                                           {order.speaker && <span>Speaker : ₹ {order.speaker}<br/></span>}
                                           {order.receiver && <span>Receiver : ₹ {order.receiver}<br/></span>}
                                           {order.glass && <span>Glass : ₹ {order.glass}<br/></span>}
-                                          {order.others && <span>Others : {order.others.issues.length} issue<br/></span>}</td>
+                                          {order.others && <span>Others : {order.others.issues.length} issue<br/></span>}
+                                          </td>
                                         <td>₹ {order.total}</td>
                                     </tr>
                                 </tbody>
@@ -304,4 +327,3 @@ const Checkout = () =>  {
    </>
   )
 }
-export default ProtectedRoute(Checkout);

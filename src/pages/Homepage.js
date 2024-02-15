@@ -73,30 +73,6 @@ export default function Homepage() {
    },1000);
   },[]);
 
-  const getIpads = async (event,brand) => {
-   event.preventDefault();
-   let data = {
-      brand:brand,
-      type:"ipad"
-   } 
-   const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/models/getmodels`,data);
-   if(response.data){
-      dispatch(addmodelsobj(response.data.models));
-      router.push('./modelselection')
-   }
-}
-const getIwatches = async (event,brand) => {
-   event.preventDefault();
-   let data = {
-      brand:brand,
-      type:"iwatch"
-   } 
-   const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/models/getmodels`,data);
-   if(response.data){
-      dispatch(addmodelsobj(response.data.models));
-      router.push('./modelselection')
-   }
-}
   
   return (
     <>
@@ -119,14 +95,14 @@ const getIwatches = async (event,brand) => {
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
       <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
       <meta name="theme-color" content="#111"/>
-      <link href="./images/favicon.png" rel="icon"/>
-      <link href="./css/bootstrap.min.css" rel="stylesheet"/>
-      <link href="./css/blueket.plugin.css" rel="stylesheet"/>
-      <link href="./css/swiper.min.css" rel="stylesheet"/>
+      <link href="/images/favicon.png" rel="icon"/>
+      <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+      <link href="/css/blueket.plugin.css" rel="stylesheet"/>
+      <link href="/css/swiper.min.css" rel="stylesheet"/>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-      <link href="./css/style.css" rel="stylesheet"/>
-      <link href="./css/responsive.css" rel="stylesheet"/>
-      <link href="./css/colormode.css" rel="stylesheet"/>
+      <link href="/css/style.css" rel="stylesheet"/>
+      <link href="/css/responsive.css" rel="stylesheet"/>
+      <link href="/css/colormode.css" rel="stylesheet"/>
       </Head>
       <Header location={"Home"}/>
       <Slider {...settings2}>
@@ -134,7 +110,7 @@ const getIwatches = async (event,brand) => {
          <div class="swiper-container">
             <div class="swiper-wrapper">
                <div class="swiper-slide">
-                  <div class="slide-inner slide-bg-image" style={{backgroundImage:"url('./images/slider-1.jpg')"}}>
+                  <div class="slide-inner slide-bg-image" style={{backgroundImage:"url('/images/slider-1.jpg')"}}>
                      <div class="container">
                         <div data-swiper-parallax="300" class="slide-title">
                           <span class="scriptheading dashbefore mb15 wow fadeIn" data-wow-delay=".2s" data-wow-duration="1500ms">We are Expert in</span>
@@ -153,7 +129,7 @@ const getIwatches = async (event,brand) => {
                   </div>
                </div>
                <div class="swiper-slide">
-                  <div class="slide-inner slide-bg-image" style={{backgroundImage:"url('./images/slider-2.jpg')"}}>
+                  <div class="slide-inner slide-bg-image" style={{backgroundImage:"url('/images/slider-2.jpg')"}}>
                      <div class="container">
                         <div data-swiper-parallax="300" class="slide-title">
                            <span class="scriptheading dashbefore mb15 wow fadeIn" data-wow-delay=".2s" data-wow-duration="1500ms">We are Expert in</span>
@@ -177,7 +153,7 @@ const getIwatches = async (event,brand) => {
          <div class="swiper-container">
             <div class="swiper-wrapper">
                <div class="swiper-slide">
-                  <div class="slide-inner slide-bg-image" style={{backgroundImage:"url('./images/slider-1.jpg')"}}>
+                  <div class="slide-inner slide-bg-image" style={{backgroundImage:"url('/images/slider-1.jpg')"}}>
                      <div class="container">
                         <div data-swiper-parallax="300" class="slide-title">
                           <span class="scriptheading dashbefore mb15 wow fadeIn" data-wow-delay=".2s" data-wow-duration="1500ms">We are Expert in</span>
@@ -196,7 +172,7 @@ const getIwatches = async (event,brand) => {
                   </div>
                </div>
                <div class="swiper-slide">
-                  <div class="slide-inner slide-bg-image" style={{backgroundImage:"url('./images/slider-2.jpg')"}}>
+                  <div class="slide-inner slide-bg-image" style={{backgroundImage:"url('/images/slider-2.jpg')"}}>
                      <div class="container">
                         <div data-swiper-parallax="300" class="slide-title">
                            <span class="scriptheading dashbefore mb15 wow fadeIn" data-wow-delay=".2s" data-wow-duration="1500ms">We are Expert in</span>
@@ -229,7 +205,7 @@ const getIwatches = async (event,brand) => {
                <Link href="brandselection">
                   <div class="sw-card sw-cl-2">
                      <div class="box-icons">
-                        <img src="./images/app.png" alt="icon"/>
+                        <img src="/images/app.png" alt="icon"/>
                      </div>
                      <div class="sw-cardinfo">                       
                         <h3 class="swbttitlex">Mobile</h3>
@@ -241,7 +217,7 @@ const getIwatches = async (event,brand) => {
                   <Link href="/modelselection?brand=apple&devicetype=tablet">  
                   <div class="sw-card sw-cl-2">
                      <div class="box-icons">
-                        <img src="./images/ux-design.png" alt="icon"/>
+                        <img src="/images/ux-design.png" alt="icon"/>
                      </div>
                      <div class="sw-cardinfo">
                         <h3 class="swbttitlex">Ipad</h3>
@@ -254,7 +230,7 @@ const getIwatches = async (event,brand) => {
                 <Link href="laptops">
                      <div class="sw-card sw-cl-2">
                         <div class="box-icons">
-                           <img src="./images/content.png" alt="icon"/>
+                           <img src="/images/content.png" alt="icon"/>
                         </div>   
                      <div class="sw-cardinfo">
                         <h3 class="swbttitlex">Laptop</h3>
@@ -266,7 +242,7 @@ const getIwatches = async (event,brand) => {
                   <Link href="/modelselection?brand=apple&devicetype=watch">  
                      <div class="sw-card sw-cl-2">    
                         <div class="box-icons">
-                           <img src="./images/online-shop.png" alt="icon"/>
+                           <img src="/images/online-shop.png" alt="icon"/>
                         </div>                   
                      <div class="sw-cardinfo">
                         <h3 class="swbttitlex">Apple Watch</h3>
@@ -292,7 +268,7 @@ const getIwatches = async (event,brand) => {
            <div class="row mt30 box-size">
              <div class="col-lg-4 mt30">
                <div class="sw-card swbdr">
-                 <div class="cardicon"><img src="./images/edit.png" alt="icon"/></div>
+                 <div class="cardicon"><img src="/images/edit.png" alt="icon"/></div>
                  <h4>Check Prices​</h4>
                  <p>We understand your time is precious. Repair Dekho  expert will fix your device within 30 minutes!
                   </p>
@@ -300,7 +276,7 @@ const getIwatches = async (event,brand) => {
              </div>
              <div class="col-lg-4 mt30">
                <div class="sw-card swbdr">
-                 <div class="cardicon"><img src="./images/paid-content.png" alt="icon"/></div>
+                 <div class="cardicon"><img src="/images/paid-content.png" alt="icon"/></div>
                  <h4>Fix An Appointment
                </h4>
                  <p>Choose the time according to your ease, Our Technicians will repair your device at your place according to the time provided by you.
@@ -309,7 +285,7 @@ const getIwatches = async (event,brand) => {
              </div>
              <div class="col-lg-4 mt30">
                <div class="sw-card swbdr">
-                 <div class="cardicon"><img src="./images/feature.png" alt="icon"/></div>
+                 <div class="cardicon"><img src="/images/feature.png" alt="icon"/></div>
                  <h4>Repairing Done
                </h4>
                  <p>Get your device is a brand new condition after availing our repair services. We guarantee 99% customer satisfaction.
@@ -335,7 +311,7 @@ const getIwatches = async (event,brand) => {
                   </p>
                   <div class="medialist mt40">
                      <div class="mediablock">
-                        <div class="icondiv"><img src="./images/experience.png" alt="icon"/></div>
+                        <div class="icondiv"><img src="/images/experience.png" alt="icon"/></div>
                         <div class="mediainfoblock">
                            <h5 class="mb10">One Stop Solution</h5>
                            <p>Pickup and Delivery, Upgrades and Repairs.
@@ -344,7 +320,7 @@ const getIwatches = async (event,brand) => {
                         </div>
                      </div>
                      <div class="mediablock mt30">
-                        <div class="icondiv"><img src="./images/on-time.png" alt="icon"/></div>
+                        <div class="icondiv"><img src="/images/on-time.png" alt="icon"/></div>
                         <div class="mediainfoblock">
                            <h5 class="mb10">Trained Professionals​
                            </h5>
@@ -353,7 +329,7 @@ const getIwatches = async (event,brand) => {
                         </div>
                      </div>
                      <div class="mediablock mt30">
-                        <div class="icondiv"><img src="./images/investment.png" alt="icon"/></div>
+                        <div class="icondiv"><img src="/images/investment.png" alt="icon"/></div>
                         <div class="mediainfoblock">
                            <h5 class="mb10">Quality Parts
                            </h5>
@@ -363,7 +339,7 @@ const getIwatches = async (event,brand) => {
                         </div>
                      </div>
                      <div class="mediablock mt30">
-                        <div class="icondiv"><img src="./images/online-learning.png" alt="icon"/></div>
+                        <div class="icondiv"><img src="/images/online-learning.png" alt="icon"/></div>
                         <div class="mediainfoblock">
                            <h5 class="mb10">Transparency</h5>
                            <p>Authoritative and timely declaration of information to its customers
@@ -396,7 +372,7 @@ const getIwatches = async (event,brand) => {
                   <div class="img-collage-set row">
                      <div class="blueketshape1 shapesw shapecontrol-4"></div>
                      <div class=" index-up">
-                        <div class="imgcover roundimg shadow"> <img src="./images/repair-13.png" alt="img"/></div>
+                        <div class="imgcover roundimg shadow"> <img src="/images/repair-13.png" alt="img"/></div>
                      </div>
                     
                      <div class="blueketshape2 shapesw shapecontrol-3"></div>
@@ -411,7 +387,7 @@ const getIwatches = async (event,brand) => {
                <div class="col-lg-5 mmt40">
                   <div class="img-collage-set row">
                      <div class=" index-up">
-                        <div class="imgcover roundimg shadow"> <img src="./images/Our-Thought.png" alt="img"/></div>
+                        <div class="imgcover roundimg shadow"> <img src="/images/Our-Thought.png" alt="img"/></div>
                      </div>
                      <div class="blueketshape2 shapesw shapecontrol-3"></div>
                   </div>
@@ -458,7 +434,7 @@ const getIwatches = async (event,brand) => {
                {/* <div class="col-lg-5 mmt40">
                   <div class="img-collage-set row">
                      <div class=" index-up">
-                        <div class="imgcover roundimg shadow"> <img src="./images/repair-13.png" alt="img"/></div>
+                        <div class="imgcover roundimg shadow"> <img src="/images/repair-13.png" alt="img"/></div>
                      </div>
                      <div class="blueketshape2 shapesw shapecontrol-3"></div>
                   </div>
@@ -478,7 +454,7 @@ const getIwatches = async (event,brand) => {
            <div class="row mt30">
              <div class="col-lg-4 mt30">
                <div class="sw-card swbdr">
-                 <div class="cardicon"><img src="./images/edit.png" alt="icon"/></div>
+                 <div class="cardicon"><img src="/images/edit.png" alt="icon"/></div>
                  <h4>Quick Service</h4>
                  <p>We understand your time is precious. Repair Dekho  expert will fix your device within 30 minutes!
                </p>
@@ -486,7 +462,7 @@ const getIwatches = async (event,brand) => {
              </div>
              <div class="col-lg-4 mt30">
                <div class="sw-card swbdr">
-                 <div class="cardicon"><img src="./images/paid-content.png" alt="icon"/></div>
+                 <div class="cardicon"><img src="/images/paid-content.png" alt="icon"/></div>
                  <h4>Free Doorstep Service</h4>
                  <p>Get premium mobile repair service at your doorstep with no additional cost.
                </p>
@@ -494,7 +470,7 @@ const getIwatches = async (event,brand) => {
              </div>
              <div class="col-lg-4 mt30">
                <div class="sw-card swbdr">
-                 <div class="cardicon"><img src="./images/feature.png" alt="icon"/></div>
+                 <div class="cardicon"><img src="/images/feature.png" alt="icon"/></div>
                  <h4>Transparency   </h4>
                  <p>Repair Dekho provides complete, authoritative and timely declaration of information to its customers
                </p>
@@ -502,7 +478,7 @@ const getIwatches = async (event,brand) => {
              </div>
              <div class="col-lg-4 mt30">
                <div class="sw-card swbdr">
-                 <div class="cardicon"><img src="./images/code.png" alt="icon"/></div>
+                 <div class="cardicon"><img src="/images/code.png" alt="icon"/></div>
                  <h4>Certified Professionals</h4>
                  <p>Repair Dekho technicians are professionally experienced. Rest assured, your device is in safe hands
 
@@ -511,7 +487,7 @@ const getIwatches = async (event,brand) => {
              </div>
              <div class="col-lg-4 mt30">
                <div class="sw-card swbdr">
-                 <div class="cardicon"><img src="./images/technical-support.png" alt="icon"/></div>
+                 <div class="cardicon"><img src="/images/technical-support.png" alt="icon"/></div>
                  <h4>6-Month Warranty</h4>      
                  <p>We offer 6-month warranty. Our team will share all the warranty related information with you
                   </p>
@@ -519,7 +495,7 @@ const getIwatches = async (event,brand) => {
              </div>
              <div class="col-lg-4 mt30">
                <div class="sw-card swbdr">
-                 <div class="cardicon"><img src="./images/update.png" alt="icon"/></div>
+                 <div class="cardicon"><img src="/images/update.png" alt="icon"/></div>
                  <h4>E-waste management
                </h4>
                  <p>At Repair Dekho, e-waste is channelized to a registered recycler for their safe transportation and disposal
@@ -542,7 +518,7 @@ const getIwatches = async (event,brand) => {
                   <Slider {...settings}>
                      <div class="blueket-card-noise card-img-round pt30">
                         <div class="review-img-block">
-                           <div class="user-image"><img src="./images/user-image.jpg" alt="review"/></div>
+                           <div class="user-image"><img src="/images/user-image.jpg" alt="review"/></div>
                            <div class="user-content">
                               <h5>Karan Kumar</h5>
                               <p>CTO @ Amber Fund</p>
@@ -553,7 +529,7 @@ const getIwatches = async (event,brand) => {
                         </div>
                         <div class="review-footer pair-block">
                            <div class="image-icon">
-                              <a href="#"><img src="./images/google.png" alt="icon"/></a>
+                              <a href="#"><img src="/images/google.png" alt="icon"/></a>
                            </div>
                            <div class="starrating">
                               <ul>
@@ -568,7 +544,7 @@ const getIwatches = async (event,brand) => {
                      </div>
                      <div class="blueket-card-noise card-img-round pt30">
                         <div class="review-img-block">
-                           <div class="user-image"><img src="./images/user-image-2.jpg" alt="review"/></div>
+                           <div class="user-image"><img src="/images/user-image-2.jpg" alt="review"/></div>
                            <div class="user-content">
                               <h5>Mike Smith</h5>
                               <p>Business Man</p>
@@ -579,7 +555,7 @@ const getIwatches = async (event,brand) => {
                         </div>
                         <div class="review-footer pair-block">
                            <div class="image-icon">
-                              <a href="#"><img src="./images/google.png" alt="icon"/></a>
+                              <a href="#"><img src="/images/google.png" alt="icon"/></a>
                            </div>
                            <div class="starrating">
                            <ul>
@@ -594,7 +570,7 @@ const getIwatches = async (event,brand) => {
                      </div>
                      <div class="blueket-card-noise card-img-round pt30">
                         <div class="review-img-block">
-                           <div class="user-image"><img src="./images/user-image-3.jpg" alt="review"/></div>
+                           <div class="user-image"><img src="/images/user-image-3.jpg" alt="review"/></div>
                            <div class="user-content">
                               <h5>Riya Smily</h5>
                               <p>CEO @ Tema Security</p>
@@ -605,7 +581,7 @@ const getIwatches = async (event,brand) => {
                         </div>
                         <div class="review-footer pair-block">
                            <div class="image-icon">
-                              <a href="#"><img src="./images/google.png" alt="icon"/></a>
+                              <a href="#"><img src="/images/google.png" alt="icon"/></a>
                            </div>
                            <div class="starrating">
                            <ul>
@@ -620,7 +596,7 @@ const getIwatches = async (event,brand) => {
                      </div>
                      <div class="blueket-card-noise card-img-round pt30">
                         <div class="review-img-block">
-                           <div class="user-image"><img src="./images/user-image-4.jpg" alt="review"/></div>
+                           <div class="user-image"><img src="/images/user-image-4.jpg" alt="review"/></div>
                            <div class="user-content">
                               <h5>Oliver Kanjorva</h5>
                               <p>Business Man</p>
@@ -631,7 +607,7 @@ const getIwatches = async (event,brand) => {
                         </div>
                         <div class="review-footer pair-block">
                            <div class="image-icon">
-                              <a href="#"><img src="./images/google.png" alt="icon"/></a>
+                              <a href="#"><img src="/images/google.png" alt="icon"/></a>
                            </div>
                            <div class="starrating">
                            <ul>
@@ -646,7 +622,7 @@ const getIwatches = async (event,brand) => {
                      </div>
                      <div class="blueket-card-noise card-img-round pt30">
                         <div class="review-img-block">
-                           <div class="user-image"><img src="./images/user-image-4.jpg" alt="review"/></div>
+                           <div class="user-image"><img src="/images/user-image-4.jpg" alt="review"/></div>
                            <div class="user-content">
                               <h5>Oliver Kanjorva</h5>
                               <p>Business Man</p>
@@ -657,7 +633,7 @@ const getIwatches = async (event,brand) => {
                         </div>
                         <div class="review-footer pair-block">
                            <div class="image-icon">
-                              <a href="#"><img src="./images/google.png" alt="icon"/></a>
+                              <a href="#"><img src="/images/google.png" alt="icon"/></a>
                            </div>
                            <div class="starrating">
                            <ul>
@@ -672,7 +648,7 @@ const getIwatches = async (event,brand) => {
                      </div>
                      <div class="blueket-card-noise card-img-round pt30">
                         <div class="review-img-block">
-                           <div class="user-image"><img src="./images/user-image-4.jpg" alt="review"/></div>
+                           <div class="user-image"><img src="/images/user-image-4.jpg" alt="review"/></div>
                            <div class="user-content">
                               <h5>Oliver Kanjorva</h5>
                               <p>Business Man</p>
@@ -683,7 +659,7 @@ const getIwatches = async (event,brand) => {
                         </div>
                         <div class="review-footer pair-block">
                            <div class="image-icon">
-                              <a href="#"><img src="./images/google.png" alt="icon"/></a>
+                              <a href="#"><img src="/images/google.png" alt="icon"/></a>
                            </div>
                            <div class="starrating">
                            <ul>
@@ -698,7 +674,7 @@ const getIwatches = async (event,brand) => {
                      </div>
                      <div class="blueket-card-noise card-img-round pt30">
                         <div class="review-img-block">
-                           <div class="user-image"><img src="./images/user-image-4.jpg" alt="review"/></div>
+                           <div class="user-image"><img src="/images/user-image-4.jpg" alt="review"/></div>
                            <div class="user-content">
                               <h5>Oliver Kanjorva</h5>
                               <p>Business Man</p>
@@ -709,7 +685,7 @@ const getIwatches = async (event,brand) => {
                         </div>
                         <div class="review-footer pair-block">
                            <div class="image-icon">
-                              <a href="#"><img src="./images/google.png" alt="icon"/></a>
+                              <a href="#"><img src="/images/google.png" alt="icon"/></a>
                            </div>
                            <div class="starrating">
                            <ul>
@@ -724,7 +700,7 @@ const getIwatches = async (event,brand) => {
                      </div>
                      <div class="blueket-card-noise card-img-round pt30">
                         <div class="review-img-block">
-                           <div class="user-image"><img src="./images/user-image-4.jpg" alt="review"/></div>
+                           <div class="user-image"><img src="/images/user-image-4.jpg" alt="review"/></div>
                            <div class="user-content">
                               <h5>Oliver Kanjorva</h5>
                               <p>Business Man</p>
@@ -735,7 +711,7 @@ const getIwatches = async (event,brand) => {
                         </div>
                         <div class="review-footer pair-block">
                            <div class="image-icon">
-                              <a href="#"><img src="./images/google.png" alt="icon"/></a>
+                              <a href="#"><img src="/images/google.png" alt="icon"/></a>
                            </div>
                            <div class="starrating">
                            <ul>

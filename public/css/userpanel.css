@@ -14,6 +14,9 @@
     list-style-type: none;
     box-sizing: border-box;
 }
+.userpanel-container{
+    display: flex;
+}
 
 #sidebar-toggle {
     display: none;
@@ -22,13 +25,8 @@
 .sidebar {
     height: 100%;
     width: 240px;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 100;
     background: #ff5723;
     color: #fff;
-    overflow-y: auto;
     transition: width 500ms;
 }
 
@@ -36,8 +34,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
+    height: 235px;
     padding: 0rem 1rem;
+}
+.sidebar-header h3{
+    color:#fff;
+    font-size: 26px !important;
+    font-weight: 700 !important;
+    line-height: 30px !important;
 }
 
 .sidebar-menu {
@@ -82,8 +86,7 @@
 }
 
 .main-content {
-    position: relative;
-    margin-left: 240px;
+    width: 100%;
     transition: margin-left 500ms;
 }
 
@@ -492,4 +495,13 @@ tbody tr:nth-child(even) {
     display: flex;
     font-weight: 800;
     margin-bottom: 30px;
+}
+.addressaction-container{    
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    margin: 15px 43px;
+}
+.addressaction-container span{    
+   cursor:pointer;
 }

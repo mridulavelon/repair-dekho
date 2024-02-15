@@ -56,13 +56,13 @@ export default function Repairmydevice() {
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
       <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
       <meta name="theme-color" content="#111"/>
-      <link href="./images/favicon.png" rel="icon"/>
-      <link href="./css/bootstrap.min.css" rel="stylesheet"/>
-      <link href="./css/blueket.plugin.css" rel="stylesheet"/>
+      <link href="/images/favicon.png" rel="icon"/>
+      <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+      <link href="/css/blueket.plugin.css" rel="stylesheet"/>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-      <link href="./css/style.css" rel="stylesheet"/>
-     <link href="./css/responsive.css" rel="stylesheet" />
-      <link href="./css/colormode.css" rel="stylesheet" /> 
+      <link href="/css/style.css" rel="stylesheet"/>
+     <link href="/css/responsive.css" rel="stylesheet" />
+      <link href="/css/colormode.css" rel="stylesheet" /> 
    </Head>
     <Header location={"Repairmydevice"}/>
       <section className="section-space  padding-b50">
@@ -78,7 +78,7 @@ export default function Repairmydevice() {
                                   
                </div>
                <div className="col-xl-6 col-lg-6 mmt40">
-                  <div className="roundimg"><img src="./images/service-bg.png" alt="img"/></div>
+                  <div className="roundimg"><img src="/images/service-bg.png" alt="img"/></div>
                </div>
             </div>
          </div>
@@ -126,7 +126,7 @@ export default function Repairmydevice() {
             <div className="row mt30 dm4">
                <div className="col-lg-4 col-sm-6 mt60 wow fadeIn" data-wow-delay=".4s">
                   <div className="sw-card  sw-cl-2">
-                     <div className="cardicon-out shadow"><img src="./images/app.png" alt="icon"/></div>
+                     <div className="cardicon-out shadow"><img src="/images/app.png" alt="icon"/></div>
                      <div className="sw-cardinfo">
                         <h3 className="swbttitlex">6 Months Warranty
                         </h3>
@@ -138,7 +138,7 @@ export default function Repairmydevice() {
                </div>
                <div className="col-lg-4 col-sm-6 mt60 wow fadeIn" data-wow-delay=".6s">
                   <div className="sw-card sw-cl-2">
-                     <div className="cardicon-out shadow"><img src="./images/ux-design.png" alt="icon"/></div>
+                     <div className="cardicon-out shadow"><img src="/images/ux-design.png" alt="icon"/></div>
                      <div className="sw-cardinfo">
                         <h3 className="swbttitlex">Onsite Repair
                         </h3>
@@ -150,7 +150,7 @@ export default function Repairmydevice() {
                </div>
                <div className="col-lg-4 col-sm-6 mt60 wow fadeIn" data-wow-delay=".8s" >
                   <div className="sw-card  sw-cl-2">
-                     <div className="cardicon-out shadow"><img src="./images/content.png" alt="icon"/></div>
+                     <div className="cardicon-out shadow"><img src="/images/content.png" alt="icon"/></div>
                      <div className="sw-cardinfo">
                         <h3 className="swbttitlex">Best Pricing
                         </h3>
@@ -167,15 +167,15 @@ export default function Repairmydevice() {
       <div className="clearfix"></div>
       <div className="container model-logo">
                     <Slider {...settings}>
-                       <div className="img-client-logo-cell"><img src="./images/company/1.png" alt="logo"/></div>                     
-                       <div className="img-client-logo-cell"><img src="./images/company/2.png" alt="logo"/></div>                     
-                       <div className="img-client-logo-cell"><img src="./images/company/3.png" alt="logo"/></div>                     
-                       <div className="img-client-logo-cell"><img src="./images/company/4.png" alt="logo"/></div>                     
-                       <div className="img-client-logo-cell"><img src="./images/company/5.png" alt="logo"/></div>                     
-                       <div className="img-client-logo-cell"><img src="./images/company/6.png" alt="logo"/></div>                     
-                       <div className="img-client-logo-cell"><img src="./images/company/7.png" alt="logo"/></div>                     
-                       <div className="img-client-logo-cell"><img src="./images/company/8.png" alt="logo"/></div>  
-                       <div className="img-client-logo-cell"><img src="./images/company/google.webp" alt="logo"/></div>  
+                       <div className="img-client-logo-cell"><img src="/images/company/1.png" alt="logo"/></div>                     
+                       <div className="img-client-logo-cell"><img src="/images/company/2.png" alt="logo"/></div>                     
+                       <div className="img-client-logo-cell"><img src="/images/company/3.png" alt="logo"/></div>                     
+                       <div className="img-client-logo-cell"><img src="/images/company/4.png" alt="logo"/></div>                     
+                       <div className="img-client-logo-cell"><img src="/images/company/5.png" alt="logo"/></div>                     
+                       <div className="img-client-logo-cell"><img src="/images/company/6.png" alt="logo"/></div>                     
+                       <div className="img-client-logo-cell"><img src="/images/company/7.png" alt="logo"/></div>                     
+                       <div className="img-client-logo-cell"><img src="/images/company/8.png" alt="logo"/></div>  
+                       <div className="img-client-logo-cell"><img src="/images/company/google.webp" alt="logo"/></div>  
                        </Slider>                  
            </div>
     <Footer/>

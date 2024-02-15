@@ -20,9 +20,6 @@ export default function offers({ data }) {
        theme:"colored"
      })
    }
-      setTimeout(() => {
-          setLoading(false);
-      },1000);
     },[])
 
     const copyOffer = async(code) => {
@@ -34,36 +31,20 @@ export default function offers({ data }) {
 
   return (
    <>
-   {
-     loading ? (
-      <div className="loader">
-       <Head>
-      <meta charset="utf-8" />
-      <title>Offers</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-      <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-      <meta name="theme-color" content="#111"/>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-      <link href="./css/style.css" rel="stylesheet"/>
-   </Head>
-        <RiseLoader color='#ff5723'/>
-      </div>
-      ) : (
-     <> 
    <Head>
       <meta charset="utf-8" />
       <title>Offers</title>
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
       <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
       <meta name="theme-color" content="#111"/>
-      <link href="./images/favicon.png" rel="icon"/>
-      <link href="./css/bootstrap.min.css" rel="stylesheet"/>
-      <link href="./css/blueket.plugin.css" rel="stylesheet"/>
-      <link href="./css/swiper.min.css" rel="stylesheet"/>
+      <link href="/images/favicon.png" rel="icon"/>
+      <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+      <link href="/css/blueket.plugin.css" rel="stylesheet"/>
+      <link href="/css/swiper.min.css" rel="stylesheet"/>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-      <link href="./css/style.css" rel="stylesheet"/>
-      <link href="./css/responsive.css" rel="stylesheet" />
-      <link href="./css/colormode.css" rel="stylesheet" />
+      <link href="/css/style.css" rel="stylesheet"/>
+      <link href="/css/responsive.css" rel="stylesheet" />
+      <link href="/css/colormode.css" rel="stylesheet" />
    </Head>
     <Header location={"Offers"}/>
     {
@@ -101,11 +82,10 @@ export default function offers({ data }) {
     }
     <Footer/>
     <ToastContainer />
-    </> )}
    </>
   )
 }
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const offersCall = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/offers/getoffers`)
   .then((response) => {
     if(response.status ===200){

@@ -600,6 +600,20 @@ tbody tr:nth-child(even) {
     border: 1px solid #000000c4;
     width: 100%;
 }
+
+.addmodel-container select{
+    height: 30px;
+    padding-inline: 10px;
+    border-radius: 9px;
+    border: 1px solid #000000c4;
+    width: 100%;
+}
+.quill{
+    width: 100%;
+    height: 200px;
+    margin-bottom: 60px;
+}
+
 .addmodel-container button{
     border-radius: 25px;
     color: white;

@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import RiseLoader from "react-spinners/RiseLoader";
 import { useRouter } from 'next/router';
 import { PuffLoader } from 'react-spinners';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Signup() {
@@ -17,16 +19,7 @@ export default function Signup() {
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [mobileno,setMobileNo] = useState("");
-  const [loading,setLoading] = useState(true);
   const[submitting,setIsSubmitting] = useState(false);
-
-
-  useEffect(() => {
-    setTimeout(() => {
-        setLoading(false);
-    },1000);
-  },[])
-
 
   const submitSignup = async (e) => {
     e.preventDefault();
@@ -60,36 +53,22 @@ export default function Signup() {
 
   return (
     <>
-    {loading ? (
-      <div className='loader'>
-      <Head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Signup</title>
-    <link href="./images/favicon.png" rel="icon"/>
-    <link rel="stylesheet" href="./css/Signup.css" />
-   </Head>
-      <RiseLoader color='#ff5723'/>
-      </div>
-    ):(
-    <>
     <Head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Signup</title>
-    <link href="./images/favicon.png" rel="icon"/>
-    <link rel="stylesheet" href="./css/Signup.css" />
+    <link href="/images/favicon.png" rel="icon"/>
+    <link rel="stylesheet" href="/css/Signup.css" />
    </Head>
-   <main style={{backgroundImage:"url('./images/slider-2.jpg')"}}>
+   <main style={{backgroundImage:"url('/images/slider-2.jpg')"}}>
       <div class="box">  
         <div class="inner-box">
         <div class="carousel">
             <div class="images-wrapper">
-              <img src="./images/image1.png" class="image img-1 show" alt="" />
-              <img src="./images/image2.png" class="image img-2" alt="" />
-              <img src="./images/image3.png" class="image img-3" alt="" />
+              <img src="/images/image1.png" class="image img-1 show" alt="" />
+              <img src="/images/image2.png" class="image img-2" alt="" />
+              <img src="/images/image3.png" class="image img-3" alt="" />
             </div>
 
             <div class="text-slider">
@@ -111,9 +90,15 @@ export default function Signup() {
           <div class="forms-wrap">
             <form onSubmit={submitSignup} autocomplete="off" class="sign-in-form">
               <div class="heading">
+              <Link href="/">
+                <div class="backwardlink-container">
+                <FontAwesomeIcon className="icon" icon={faArrowLeft} />
+                  <span>  Back to Home</span>
+                </div>
+                </Link>
                 <h2>Get Started</h2>
                 <h6>Already have an account?</h6>
-                <Link href="Login" className='toggle'>Login</Link>
+                <Link href="/Login" className='toggle'>Login</Link>
               </div>
 
               <div class="actual-form">
@@ -199,7 +184,6 @@ export default function Signup() {
       </div>
     </main>
     <ToastContainer />
-    </>)}
     </>
   )
 }

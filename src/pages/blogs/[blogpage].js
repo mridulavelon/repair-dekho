@@ -13,18 +13,27 @@ export default function Blogpage({ data }) {
     const[blog,setBlog] = useState({});
 
     useEffect(() => {
-        if(data.invalidroute){
-          router.replace("/")
-        }else{
-          if(data.success){
-            setBlog(data.response);
-          }else{
-            toast.error(data.response,{
-                theme:"colored"
-              })
-          }
+      if(!router.isReady) return; 
+      getBlogData(router.query.blogpage);
+    },[router.isReady])
+
+    const getBlogData = async(blogid) => {
+       const data = {
+         'blogid':blogid
+       }
+       const blogCall = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/blogs/getblog`,data)
+      .then((response) => {
+        console.log(response)
+        if(response.status === 201){
+          setBlog(response.data.blog);
         }
-    })
+      })
+      .catch((error) => {
+         toast.error(error.message ? error.message : "Something unexpected happened please try again later",{
+                theme:"colored"
+          })
+      })
+    }
     
   return (
    <>
@@ -69,26 +78,4 @@ export default function Blogpage({ data }) {
     <Footer/>
    </>
   )
-}
-export async function getServerSideProps(contextdata) {
-    const params = contextdata.query;
-    let blogCall;
-    if(params.id){
-      const data = {
-          "id":params.id
-      }
-      blogCall = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/blogs/getblog`,data)
-      .then((response) => {
-        if(response.status === 201){
-          return {invalidroute:false,success:true,response:response.data.blog}
-        }else{
-          return {success:true}
-        }
-      }).catch((error) => {
-         return {invalidroute:false,success:false,response:error.message ? error.message : "Something unexpected happend please try again later"}
-      })
-    }else{
-        blogCall = {invalidroute:true,success:false}     
-    }
-    return { props: { data:blogCall } };
 }

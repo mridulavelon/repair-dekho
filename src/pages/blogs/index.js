@@ -34,36 +34,20 @@ export default function blogs({ data }) {
 
   return (
    <>
-   {
-     loading ? (
-      <div className="loader">
-       <Head>
-      <meta charset="utf-8" />
-      <title>Blogs</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-      <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-      <meta name="theme-color" content="#111"/>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-      <link href="./css/style.css" rel="stylesheet"/>
-   </Head>
-        <RiseLoader color='#ff5723'/>
-      </div>
-      ) : (
-     <> 
    <Head>
       <meta charset="utf-8" />
       <title>Blogs</title>
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no,maximum-scale=1.0,user-scalable=no"/>
       <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
       <meta name="theme-color" content="#111"/>
-      <link href="./images/favicon.png" rel="icon"/>
-      <link href="./css/bootstrap.min.css" rel="stylesheet"/>
-      <link href="./css/blueket.plugin.css" rel="stylesheet"/>
-      <link href="./css/swiper.min.css" rel="stylesheet"/>
+      <link href="/images/favicon.png" rel="icon"/>
+      <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+      <link href="/css/blueket.plugin.css" rel="stylesheet"/>
+      <link href="/css/swiper.min.css" rel="stylesheet"/>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-      <link href="./css/style.css" rel="stylesheet"/>
-      <link href="./css/responsive.css" rel="stylesheet" />
-      <link href="./css/colormode.css" rel="stylesheet" />
+      <link href="/css/style.css" rel="stylesheet"/>
+      <link href="/css/responsive.css" rel="stylesheet" />
+      <link href="/css/colormode.css" rel="stylesheet" />
    </Head>
     <Header location={"Blogs"} />
        <section id="blog" class="blogs-container">
@@ -83,9 +67,9 @@ export default function blogs({ data }) {
                  </div>
                  <div class="blog-text">
                     <span>{moment(new Date(blog.timestamp)).format('MMMM Do YYYY')}</span>
-                    <a href="#"  class="blog-title">{blog.title}</a>
-                    <p>{blog.summary}</p>
-                    <Link href={`/blogs/${blog.title.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}?id=${blog._id}`}>Read more</Link>
+                     <Link href={`/blogs/${blog.blogurl}`} class="blog-title">{blog.title}</Link>
+                     <p>{blog.summary}</p>
+                    <Link href={`/blogs/${blog.blogurl}`}>Read more</Link>
                 </div>
               </div>
               ))}
@@ -93,12 +77,11 @@ export default function blogs({ data }) {
        </section>
     <Footer/>
     <ToastContainer />
-    </> )}
    </>
   )
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const blogCall = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/blogs/getblogs`)
   .then((response) => {
     if(response.status ===200){

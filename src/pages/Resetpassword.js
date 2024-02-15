@@ -63,8 +63,8 @@ export default function  Resetpassword() {
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resetpassword</title>
-    <link href="./images/favicon.png" rel="icon"/>
-    <link rel="stylesheet" href="./css/Signup.css" />
+    <link href="/images/favicon.png" rel="icon"/>
+    <link rel="stylesheet" href="/css/Signup.css" />
    </Head>
      <RiseLoader color='#ff5723'/>
       </div>
@@ -75,8 +75,8 @@ export default function  Resetpassword() {
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resetpassword</title>
-    <link href="./images/favicon.png" rel="icon"/>
-    <link rel="stylesheet" href="./css/Signup.css" />
+    <link href="/images/favicon.png" rel="icon"/>
+    <link rel="stylesheet" href="/css/Signup.css" />
    </Head>
    <main style={{backgroundImage:"url('./images/slider-2.jpg')"}}>
       <div class="box">

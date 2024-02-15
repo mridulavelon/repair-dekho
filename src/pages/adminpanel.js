@@ -392,6 +392,7 @@ export default function Adminpanel() {
         const data = {
             "title":e.target.blogtitle.value,
             "summary":e.target.blogsummary.value,
+            "blogurl": e.target.blogtitle.value.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase(),
             "cover":e.target.blogcover.value,
             "content":blogContent,
             "timestamp":new Date()
@@ -458,6 +459,7 @@ export default function Adminpanel() {
        const data = {
          "id":updateDetails.id,
          "title":updateDetails.title,
+         "blogurl":updateDetails.title.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase(),
          "cover":updateDetails.cover,
          "summary":updateDetails.summary,
          "content":updateDetails.content,
@@ -707,6 +709,30 @@ export default function Adminpanel() {
         })
     }
 
+    const deleteUserHandler = async(userid) => {
+      const data = {
+          "id":userid
+      }
+      const deleteCall = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/signup/deleteusers`,data)
+      .then(async(response) => {
+         if(response.data.success){
+           toast.success(response.data.response,{
+               theme:"colored"
+             });
+             getUsersHandler();
+         }else{
+           toast.error(response.data.response,{
+               theme:"colored"
+             }) 
+         }
+      })
+      .catch((error)  => {
+          toast.error(error.message?error.message : "Something unexpected happened please try again later",{
+            theme:"colored"
+          }) 
+       });
+  }
+
   return (
     <>
      <Head>
@@ -714,7 +740,7 @@ export default function Adminpanel() {
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"/>
-    <link rel="stylesheet" href="./css/adminpanel.css"/>
+    <link rel="stylesheet" href="/css/adminpanel.css"/>
     </Head>
     <>
     {showDashboard ? (
@@ -1048,7 +1074,7 @@ export default function Adminpanel() {
                                     <tr>
                                         <td><div><img className='order-image' src={order.modelimagelink}/></div>{order.model}</td>
                                         <td>
-                                          {order.display && <span>Display : ₹ {order?.display}<br/></span>}
+                                        {order.display && <span>Display({order.display.type}): ₹ {order.display.price}<br /></span>}
                                           {order.battery && <span>Battery : ₹ {order?.battery}<br/></span>}
                                           {order.charging && <span>Charging : ₹ {order?.charging}<br/></span>}
                                           {order.backpanel && <span>Back Panel : {order?.backpanel}<br/></span>}
@@ -1122,7 +1148,7 @@ export default function Adminpanel() {
                                         <th>Mobile no</th>
                                         <th>Fullname</th>
                                         <th>Shipping Address</th>
-                                        {/* <th>Actions</th> */}
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1135,6 +1161,11 @@ export default function Adminpanel() {
                                       <td>
                                         {user.shippingaddress}
                                       </td>
+                                      <td>
+                                            <div class="actions-container">
+                                            <FontAwesomeIcon className="icon" icon={faTrashCan}  size="lg" onClick={() => deleteUserHandler(user._id)}/> 
+                                            </div>
+                                        </td>
                                   </tr>
                                     ))}
                                 </tbody>
@@ -1182,8 +1213,8 @@ export default function Adminpanel() {
     <Modal open={addModel} onClose={onCloseAddModel} center classNames={{modal:'customModal'}}>
          <div>
             <h2>Add model</h2>
-            <div className="addmodel-container">
-            <form onSubmit={addModelHandler}>
+            <div>
+            <form onSubmit={addModelHandler} className="addmodel-container">
                     <input type="text" placeholder="Modelname" name="modelname" required/>
                     <input type="number" placeholder="Touch" name="touch" />
                     <input type="number" placeholder="Display Local" name="displaylocal" required/>
@@ -1206,10 +1237,10 @@ export default function Adminpanel() {
     <Modal open={updateModel} onClose={onCloseUpdateModel} center classNames={{modal:'customModal'}}>
          <div>
             <h2>Update Model</h2>
-            <div className="addmodel-container">
-                    <form onSubmit={updateModelHandler}>
+            <div>
+                    <form onSubmit={updateModelHandler} className="addmodel-container">
                     <input type="hidden" name="modelid" value={updateDetails.id}/>
-                    <input placeholder="Modelname" name="modelname" value={updateDetails.modelname} c required/>
+                    <input type="text" placeholder="Modelname" name="modelname" value={updateDetails.modelname} onChange={(e) => setUpdateDetails({...updateDetails,modelname:e.target.value.length > 0 ? e.target.value : ""})} required/>
                     <input type="number" placeholder="Touch" name="touch" value={updateDetails.touch}  onChange={(e) => setUpdateDetails({...updateDetails,touch:e.target.value.length > 0 ? Number(e.target.value) : ""})} required/>
                     <input type="number" placeholder="Display Local" name="displaylocal" value={updateDetails.localdisplay}  onChange={(e) => setUpdateDetails({...updateDetails,localdisplay:e.target.value.length > 0 ? Number(e.target.value) : ""})} required/>
                     <input type="number" placeholder="Display branded" name="displaybranded" value={updateDetails.brandeddisplay}  onChange={(e) => setUpdateDetails({...updateDetails,brandeddisplay:e.target.value.length > 0 ? Number(e.target.value) : ""})} required/>
@@ -1221,8 +1252,8 @@ export default function Adminpanel() {
                     <input type="number" placeholder="Speaker" name="speaker" value={updateDetails.speaker}  onChange={(e) => setUpdateDetails({...updateDetails,speaker:e.target.value.length > 0 ? Number(e.target.value) : ""})} />
                     <input type="number" placeholder="Receiver" name="receiver" value={updateDetails.receiver}  onChange={(e) => setUpdateDetails({...updateDetails,receiver:e.target.value.length > 0 ? Number(e.target.value) : ""})} />
                     <input type="number" placeholder="Glass" name="glass" value={updateDetails.glass}  onChange={(e) => setUpdateDetails({...updateDetails,glass:e.target.value.length > 0 ? Number(e.target.value) : ""})} />
-                    <input placeholder="Small Image link"  name="smallimagelink" value={updateDetails.smallimagelink}  onChange={(e) => setUpdateDetails({...updateDetails,smallimagelink:e.target.value})} required/>
-                    <input placeholder="Big Image link" name="modelimagelink" value={updateDetails.modelimagelink}  onChange={(e) => setUpdateDetails({...updateDetails,modelimagelink:e.target.value})} required/>
+                    <input type="text" placeholder="Small Image link"  name="smallimagelink" value={updateDetails.smallimagelink}  onChange={(e) => setUpdateDetails({...updateDetails,smallimagelink:e.target.value})} required/>
+                    <input type="text"placeholder="Big Image link" name="modelimagelink" value={updateDetails.modelimagelink}  onChange={(e) => setUpdateDetails({...updateDetails,modelimagelink:e.target.value})} required/>
                     <button type="submit">Submit</button>
                     </form>
             </div>
@@ -1230,9 +1261,9 @@ export default function Adminpanel() {
     </Modal>
     <Modal open={addBlog} onClose={onCloseAddBlog} center classNames={{modal:'customModal'}}>
          <div>
-            <h2>Add model</h2>
-            <div className="addmodel-container">
-               <form onSubmit={addBlogHandler} class="form-handler">
+            <h2>Add blog</h2>
+            <div >
+               <form onSubmit={addBlogHandler} className="addmodel-container">
                     <input  placeholder="Blog title" name="blogtitle" required/>
                     <input  placeholder="Blog Summary" name="blogsummary" required/>
                     <input  placeholder="Blog Cover link" name="blogcover" required/>
@@ -1245,8 +1276,8 @@ export default function Adminpanel() {
     <Modal open={updateBlog} onClose={onCloseUpdateBlog} center classNames={{modal:'customModal'}}>
          <div>
             <h2>Update Blog</h2>
-            <div className="addmodel-container">
-               <form onSubmit={updateBlogHandler} class="form-handler">
+            <div>
+               <form onSubmit={updateBlogHandler}  className="addmodel-container">
                     <input  placeholder="Blog title" name="blogtitle" value={updateDetails.title} onChange={(e) => setUpdateDetails({...updateDetails,title:e.target.value})}required/>
                     <input  placeholder="Blog Summary" name="blogsummary" value={updateDetails.summary} onChange={(e) => setUpdateDetails({...updateDetails,summary:e.target.value})} required/>
                     <input  placeholder="Blog Cover link" name="blogcover" value={updateDetails.cover} onChange={(e) => setUpdateDetails({...updateDetails,cover:e.target.value})} required/>
@@ -1259,8 +1290,8 @@ export default function Adminpanel() {
     <Modal open={addBrand} onClose={onCloseAddBrand} center classNames={{modal:'customModal'}}>
          <div>
             <h2>Add Brand</h2>
-            <div className="addmodel-container">
-               <form onSubmit={addBrandHandler} class="form-handler">
+            <div>
+               <form onSubmit={addBrandHandler}className="addmodel-container">
                     <input  placeholder="Brand name" name="brandname" required/>
                     <input  placeholder="Brand image link" name="brandimagelink" required/>
                     <button type="submit">Submit</button>
@@ -1271,8 +1302,8 @@ export default function Adminpanel() {
     <Modal open={updateBrand} onClose={onCloseUpdateBrand} center classNames={{modal:'customModal'}}>
          <div>
             <h2>Update Brand</h2>
-            <div className="addmodel-container">
-               <form onSubmit={updateBrandHandler} class="form-handler">
+            <div >
+               <form onSubmit={updateBrandHandler}className="addmodel-container">
                      <input  placeholder="Brand name" name="brandname" value={updateDetails.name} onChange={(e) => setUpdateDetails({...updateDetails,name:e.target.value})} required/>
                      <input  placeholder="Brand image link" name="brandimagelink" value={updateDetails.imagelink} onChange={(e) => setUpdateDetails({...updateDetails,imagelink:e.target.value})} required/>
                      <button type="submit">Submit</button>
@@ -1283,8 +1314,8 @@ export default function Adminpanel() {
     <Modal open={addOffer} onClose={onCloseAddOffer} center classNames={{modal:'customModal'}}>
          <div>
             <h2>Add Offer</h2>
-            <div className="addmodel-container">
-               <form onSubmit={addOfferHandler} class="form-handler">
+            <div>
+               <form onSubmit={addOfferHandler} className="addmodel-container">
                     <input  placeholder="Offer label"  name="label" required/>
                     <input   type="number" placeholder="Discount percent" name="discountpercent" required/>
                     <select name="applicableservice" required>
@@ -1302,9 +1333,9 @@ export default function Adminpanel() {
     </Modal>
     <Modal open={updateOffer} onClose={onCloseUpdateOffer} center classNames={{modal:'customModal'}}>
          <div>
-            <h2>Update Brand</h2>
-            <div className="addmodel-container">
-               <form onSubmit={updateOfferHandler} class="form-handler">
+            <h2>Update offer</h2>
+            <div>
+               <form onSubmit={updateOfferHandler} className="addmodel-container">
                      <input  placeholder="Offer label"  name="label" value={updateDetails.label} onChange={(e) => setUpdateDetails({...updateDetails,label:e.target.value})} required/>
                      <input   type="number" placeholder="Discount percent" name="discountpercent" value={updateDetails.discountpercent} onChange={(e) => setUpdateDetails({...updateDetails,discountpercent:e.target.value})} required/>
                       <select name="applicableservice" value={updateDetails.applicableservice} onChange={(e) => setUpdateDetails({...updateDetails,applicableservice:e.target.value})} required>
